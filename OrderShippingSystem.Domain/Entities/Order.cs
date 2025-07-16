@@ -21,6 +21,7 @@ namespace OrderShippingSystem.Domain.Entities
 
         public DateTime CreatedAt { get; set; }
 
+        //GİTHUB PROJE DENEMESİ
 
 
 
