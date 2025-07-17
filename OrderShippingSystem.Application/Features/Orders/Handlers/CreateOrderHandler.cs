@@ -16,6 +16,7 @@ namespace OrderShippingSystem.Application.Features.Orders.Handlers
 
         public async Task<int> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
+           
             var order = new Order
             {
                 UserId = request.Order.UserId,
@@ -24,6 +25,15 @@ namespace OrderShippingSystem.Application.Features.Orders.Handlers
                 CargoCompanyId = request.Order.CargoCompanyId
             };
 
+           
+            order.OrderItems = request.Order.Items.Select(x => new OrderItem
+            {
+                ProductId = x.ProductId,
+                Quantity = x.Quantity,
+                UnitPrice = 0 
+            }).ToList();
+
+            
             await _orderRepository.AddAsync(order);
 
             return order.Id;

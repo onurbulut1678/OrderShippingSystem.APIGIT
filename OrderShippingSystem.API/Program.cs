@@ -5,6 +5,9 @@ using OrderShippingSystem.Application.Interfaces;
 using OrderShippingSystem.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using OrderShippingSystem.Application.Features.Products.Handlers;
+using OrderShippingSystem.Application.Features.Orders.Commands;
+
+
 
 
 
@@ -16,7 +19,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+ 
 
 builder.Services.AddDbContext<OrderShippingDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -27,8 +30,9 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(GetAllProductsHandler).Assembly);
 });
 //DEPENDENCY ?NJECT?ON
-
-
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateOrderCommand>());
+//güncel kod
+builder.Services.AddScoped<IOrderRepository, EfOrderRepository>();
 
 var app = builder.Build();
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderShippingSystem.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using OrderShippingSystem.Infrastructure.Persistence;
 namespace OrderShippingSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderShippingDbContext))]
-    partial class OrderShippingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250717104809_AddCreatedAtColumnToOrders")]
+    partial class AddCreatedAtColumnToOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +82,7 @@ namespace OrderShippingSystem.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int?>("OrderId1")
@@ -99,8 +102,6 @@ namespace OrderShippingSystem.Infrastructure.Migrations
                     b.HasIndex("OrderId");
 
                     b.HasIndex("OrderId1");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
                 });
@@ -152,25 +153,13 @@ namespace OrderShippingSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("OrderShippingSystem.Domain.Entities.OrderItem", b =>
                 {
-                    b.HasOne("OrderShippingSystem.Domain.Entities.Order", "Order")
+                    b.HasOne("OrderShippingSystem.Domain.Entities.Order", null)
                         .WithMany("Items")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("OrderShippingSystem.Domain.Entities.Order", null)
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId1");
-
-                    b.HasOne("OrderShippingSystem.Domain.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("OrderShippingSystem.Domain.Entities.Order", b =>

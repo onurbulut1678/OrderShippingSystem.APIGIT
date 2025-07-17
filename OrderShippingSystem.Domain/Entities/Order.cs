@@ -23,6 +23,7 @@ namespace OrderShippingSystem.Domain.Entities
 
         //GİTHUB PROJE DENEMESİ
         //gıthup deneme
+        public List<OrderItem> OrderItems { get; set; } = new();
 
 
 

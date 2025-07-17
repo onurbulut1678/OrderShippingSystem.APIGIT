@@ -23,6 +23,22 @@ namespace OrderShippingSystem.Infrastructure.Persistence
         public DbSet<CargoCompany> CargoCompanies => Set<CargoCompany>();
 
         //entitieleri tabloya döktük
+       // protected override void OnModelCreating(ModelBuilder modelBuilder)
+     //   {
+           // base.OnModelCreating(modelBuilder);
 
+            //modelBuilder.Entity<OrderItem>()
+              //  .HasOne(oi => oi.Order)
+                //.WithMany(o => o.Items)
+                //.HasForeignKey(oi => oi.OrderId);
+
+          //  modelBuilder.Entity<Order>()
+            //    .Property(o => o.TotalPrice)
+              //  .HasColumnType("decimal(18,2)");
+
+       //     modelBuilder.Entity<OrderItem>()
+         //       .Property(oi => oi.UnitPrice)
+           //     .HasColumnType("decimal(18,2)");
+        //}
     }
 }
