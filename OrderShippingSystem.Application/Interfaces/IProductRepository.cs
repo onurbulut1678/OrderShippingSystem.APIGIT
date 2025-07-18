@@ -8,8 +8,8 @@ using OrderShippingSystem.Domain.Entities;
 namespace OrderShippingSystem.Application.Interfaces
 {
     //burda nasıl yapıldığı değil ne yapıldığı gösterilir;
-    public interface IProductRepository
+    public interface IProductRepository : IGenericRepository<Product>
     {
-        Task<List<Product>> GetAllAsync();
+        
     }
 }

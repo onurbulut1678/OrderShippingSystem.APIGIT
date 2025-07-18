@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace OrderShippingSystem.Application.Interfaces
 {
-    internal class ICargoCompany
+    public interface ICargoStrategy
     {
+        decimal CalculatePrice(decimal orderTotal);
     }
 }

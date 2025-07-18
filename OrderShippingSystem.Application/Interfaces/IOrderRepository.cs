@@ -2,9 +2,8 @@
 
 namespace OrderShippingSystem.Application.Interfaces
 {
-    public interface IOrderRepository
+    public interface IOrderRepository : IGenericRepository<Order>
     {
-        Task<int> AddAsync(Order order);
-        // İleride ihtiyacına göre GetById, GetAll gibi metodlar da ekleyebiliriz.
+        Task<int> AddAsync(Order order); // Sipariş eklerken ID dönecek şekilde özel
     }
 }

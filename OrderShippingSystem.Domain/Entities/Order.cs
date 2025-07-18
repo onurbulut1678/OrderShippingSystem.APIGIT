@@ -14,7 +14,7 @@ namespace OrderShippingSystem.Domain.Entities
 
         public int UserId { get; set; }
 
-        public List<OrderItem> Items { get; set; } = new();
+        //public List<OrderItem> Items { get; set; } = new();
         public int CargoCompanyId { get; set; }  
         public DateTime OrderDate { get; set; } = DateTime.Now;  
         public decimal TotalPrice { get; set; }
