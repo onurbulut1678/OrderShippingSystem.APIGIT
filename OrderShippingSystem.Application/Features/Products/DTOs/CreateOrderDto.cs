@@ -1,4 +1,7 @@
-﻿namespace OrderShippingSystem.Application.Features.Orders.Dtos
+﻿using OrderShippingSystem.Application.Features.Orders.Dtos;
+namespace OrderShippingSystem.Application.Features.Orders.Dtos
+   
+
 {
     public class CreateOrderDto
     {
@@ -8,9 +11,5 @@
         public int CargoCompanyId { get; set; }
     }
 
-    public class OrderItemDto
-    {
-        public int ProductId { get; set; }
-        public int Quantity { get; set; }
-    }
+   
 }

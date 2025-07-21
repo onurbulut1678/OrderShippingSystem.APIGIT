@@ -7,9 +7,10 @@ using OrderShippingSystem.Domain.Entities;
 
 namespace OrderShippingSystem.Application.Interfaces
 {
-    //burda nasıl yapıldığı değil ne yapıldığı gösterilir;
+  
     public interface IProductRepository : IGenericRepository<Product>
     {
-        
+        Task<int> AddAsync(Product product);
+
     }
 }

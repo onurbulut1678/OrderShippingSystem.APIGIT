@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using OrderShippingSystem.Application.Features.Products.Queries;
 using OrderShippingSystem.Application.Features.Products.DTOs;
-using OrderShippingSystem.Application.Features.Orders.Commands;
-using OrderShippingSystem.Application.Features.Orders.Dtos;
+using OrderShippingSystem.Application.Features.Products.Commands; // EKLE
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace OrderShippingSystem.API.Controllers
 {
@@ -11,27 +13,27 @@ namespace OrderShippingSystem.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        //Dependency ınjection burda yaptık
         private readonly IMediator _mediator;
 
         public ProductsController(IMediator mediator)
         {
             _mediator = mediator;
         }
-        //tokenlama yapılacak
 
+        
         [HttpGet]
         public async Task<ActionResult<List<ProductDto>>> Get(CancellationToken cancellation)
         {
-            var result = await _mediator.Send(new GetAllProductsQuery(),cancellation);
+            var result = await _mediator.Send(new GetAllProductsQuery(), cancellation);
             return Ok(result);
         }
+
+       
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDto orderDto)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommand command)
         {
-            var command = new CreateOrderCommand(orderDto);
-            var orderId = await _mediator.Send(command);
-            return Ok(orderId);
+            var productId = await _mediator.Send(command);
+            return CreatedAtAction(nameof(Get), new { id = productId }, null);
         }
     }
 }

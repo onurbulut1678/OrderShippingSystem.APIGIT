@@ -2,6 +2,7 @@
 using OrderShippingSystem.Application.Features.Orders.Commands;
 using OrderShippingSystem.Application.Features.Orders.Dtos;
 using MediatR;
+using OrderShippingSystem.Application.Features.Orders.Queries;
 
 namespace OrderShippingSystem.API.Controllers
 {
@@ -22,6 +23,12 @@ namespace OrderShippingSystem.API.Controllers
             var command = new CreateOrderCommand { Order = orderDto };
             var orderId = await _mediator.Send(command);
             return Ok(orderId);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetOrders()
+        {
+            var orders = await _mediator.Send(new GetOrdersQuery());
+            return Ok(orders);
         }
     }
 }

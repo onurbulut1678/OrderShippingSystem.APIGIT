@@ -6,6 +6,7 @@ using OrderShippingSystem.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using OrderShippingSystem.Application.Features.Products.Handlers;
 using OrderShippingSystem.Application.Features.Orders.Commands;
+using OrderShippingSystem.Application.Strategies;
 
 
 
@@ -24,6 +25,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<OrderShippingDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IProductRepository, EfProductRepository>();
+builder.Services.AddScoped<ICargoStrategyFactory, CargoStrategyFactory>();
+
 
 builder.Services.AddMediatR(cfg =>
 {

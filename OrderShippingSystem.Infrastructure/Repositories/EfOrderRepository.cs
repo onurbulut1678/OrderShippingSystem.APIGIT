@@ -9,6 +9,11 @@ namespace OrderShippingSystem.Infrastructure.Repositories
         public EfOrderRepository(OrderShippingDbContext context) : base(context)
         {
         }
+        public IQueryable<Order> GetQueryable()
+        {
+            return _context.Orders;
+        }
+
 
         public async Task<int> AddAsync(Order order)
         {

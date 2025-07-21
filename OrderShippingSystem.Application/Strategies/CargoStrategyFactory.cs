@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OrderShippingSystem.Application.Strategies
 {
-    public class CargoStrategyFactory
+    public class CargoStrategyFactory : ICargoStrategyFactory
     {
         public ICargoStrategy GetStrategy(int cargoCompanyId)
         {
@@ -16,7 +16,7 @@ namespace OrderShippingSystem.Application.Strategies
                 1 => new YurticiKargoStrategy(),
                 2 => new ArasKargoStrategy(),
                 3 => new MngKargoStrategy(),
-                _ => throw new ArgumentException("Invalid Cargo Company ID")
+                _ => throw new ArgumentException("Geçersiz kargo firması ID")
             };
         }
     }
