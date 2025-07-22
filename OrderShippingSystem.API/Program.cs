@@ -3,39 +3,40 @@ using Microsoft.EntityFrameworkCore;
 using OrderShippingSystem.Infrastructure.Persistence;
 using OrderShippingSystem.Application.Interfaces;
 using OrderShippingSystem.Infrastructure.Repositories;
-using Microsoft.Extensions.DependencyInjection;
 using OrderShippingSystem.Application.Features.Products.Handlers;
 using OrderShippingSystem.Application.Features.Orders.Commands;
 using OrderShippingSystem.Application.Strategies;
-
-
-
-
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration) // appsettings.json üzerinden okuncak buraya dikkat edelim bak.
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+
+builder.Host.UseSerilog();
+
+// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
- 
 
 builder.Services.AddDbContext<OrderShippingDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IProductRepository, EfProductRepository>();
-builder.Services.AddScoped<ICargoStrategyFactory, CargoStrategyFactory>();
 
+builder.Services.AddScoped<IProductRepository, EfProductRepository>();
+builder.Services.AddScoped<IOrderRepository, EfOrderRepository>();
+builder.Services.AddScoped<ICargoStrategyFactory, CargoStrategyFactory>();
 
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(GetAllProductsHandler).Assembly);
 });
-//DEPENDENCY ?NJECT?ON
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateOrderCommand>());
-//güncel kod
-builder.Services.AddScoped<IOrderRepository, EfOrderRepository>();
 
 var app = builder.Build();
 
@@ -47,9 +48,21 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
-app.Run();
+//burda düzgün kapanýþ yapýcaz
+try
+{
+    Log.Information("Uygulama baþlatýlýyor...");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Uygulama baþlatýlýrken  hata oluþtu!");
+}
+finally
+{
+    Log.Information("Uygulama kapanýyor.");
+    Log.CloseAndFlush();
+}
