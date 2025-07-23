@@ -3,6 +3,7 @@ using OrderShippingSystem.Application.Features.Orders.Commands;
 using OrderShippingSystem.Application.Interfaces;
 using OrderShippingSystem.Application.Strategies;
 using OrderShippingSystem.Domain.Entities;
+using Serilog;
 
 namespace OrderShippingSystem.Application.Features.Orders.Handlers
 {
@@ -19,12 +20,13 @@ namespace OrderShippingSystem.Application.Features.Orders.Handlers
 
         public async Task<int> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
+            Log.Information(" Sipariş oluşturma işlemi başladı. KullanıcıId: {UserId}", request.Order.UserId);
             // 1. Kargo stratejisini al
             var strategy = _cargoStrategyFactory.GetStrategy(request.Order.CargoCompanyId);
 
             // 2. Kargo ücretini hesapla
             decimal shippingPrice = strategy.CalculatePrice(request.Order.TotalPrice);
-
+            Log.Information(" Kargo ücreti hesaplandı: {ShippingPrice}", shippingPrice);
             // 3. Siparişi oluştur
             var order = new Order
             {
@@ -41,9 +43,11 @@ namespace OrderShippingSystem.Application.Features.Orders.Handlers
                 Quantity = x.Quantity,
                 UnitPrice = 0
             }).ToList();
+            Log.Information(" Sipariş nesnesi oluşturuldu. Ürün adedi: {ItemCount}", order.OrderItems.Count);
 
             // 5. Siparişi kaydet
             await _orderRepository.AddAsync(order);
+            Log.Information(" Sipariş başarıyla kaydedildi. OrderId: {OrderId}", order.Id);
 
             return order.Id;
         }

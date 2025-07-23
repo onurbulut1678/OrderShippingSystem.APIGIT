@@ -7,22 +7,38 @@ using OrderShippingSystem.Application.Features.Products.Handlers;
 using OrderShippingSystem.Application.Features.Orders.Commands;
 using OrderShippingSystem.Application.Strategies;
 using Serilog;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
+using OrderShippingSystem.Application.Validators; // Validator klasörüne göre kontrol et
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// 
 Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration) // appsettings.json üzerinden okuncak buraya dikkat edelim bak.
+    .ReadFrom.Configuration(builder.Configuration) // appsettings.json üzerinden okunacak burasý önemli dikkat edelim
     .Enrich.FromLogContext()
     .WriteTo.Console()
     .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-
+// 
 builder.Host.UseSerilog();
 
-// Add services to the container.
-builder.Services.AddControllers();
+// Burda yapacaz
+builder.Services.AddControllers()
+    .AddFluentValidation(fv =>
+    {
+        fv.RegisterValidatorsFromAssemblyContaining<CreateOrderDtoValidator>();
+    });
+
+// 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = false;
+});
+
+// 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -33,6 +49,7 @@ builder.Services.AddScoped<IProductRepository, EfProductRepository>();
 builder.Services.AddScoped<IOrderRepository, EfOrderRepository>();
 builder.Services.AddScoped<ICargoStrategyFactory, CargoStrategyFactory>();
 
+// 
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(GetAllProductsHandler).Assembly);
@@ -40,18 +57,19 @@ builder.Services.AddMediatR(cfg =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Swagger UI
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-//burda düzgün kapanýþ yapýcaz
+// 
 try
 {
     Log.Information("Uygulama baþlatýlýyor...");
@@ -59,7 +77,7 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Uygulama baþlatýlýrken  hata oluþtu!");
+    Log.Fatal(ex, "Uygulama baþlatýlýrken hata oluþtu!");
 }
 finally
 {
