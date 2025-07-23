@@ -48,7 +48,7 @@ namespace OrderShippingSystem.Application.Features.Orders.Handlers
                 
 
             }).ToList();
-          //  Log.Information(" Siparişler başarıyla DTO'ya dönüştürüldü ve döndürüldü.");
+          //  Log.Information(" Siparişler döndürüldu.");
           //bunu yanlış yere koyduk muhtemelen
         }
     }

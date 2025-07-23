@@ -13,5 +13,10 @@ namespace OrderShippingSystem.Application.Features.Products.Commands
     public class CreateProductCommand : IRequest<int>
     {
         public CreateProductDto Product { get; set; }
+        public CreateProductCommand(CreateProductDto product)
+        {
+            Product = product;
+        }
+
     }
 }

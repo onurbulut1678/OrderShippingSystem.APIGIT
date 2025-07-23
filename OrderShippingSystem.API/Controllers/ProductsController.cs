@@ -28,12 +28,14 @@ namespace OrderShippingSystem.API.Controllers
             return Ok(result);
         }
 
-       
+
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommand command)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto dto)
         {
+            var command = new CreateProductCommand(dto);
             var productId = await _mediator.Send(command);
             return CreatedAtAction(nameof(Get), new { id = productId }, null);
         }
+    
     }
 }
