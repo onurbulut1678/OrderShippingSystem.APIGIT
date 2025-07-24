@@ -11,6 +11,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using OrderShippingSystem.Application.Validators;
+using OrderShippingSystem.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,6 +69,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

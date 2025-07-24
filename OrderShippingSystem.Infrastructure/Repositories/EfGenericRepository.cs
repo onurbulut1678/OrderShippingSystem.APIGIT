@@ -26,6 +26,16 @@ namespace OrderShippingSystem.Infrastructure.Repositories
             _context.Set<T>().Remove(entity);
             await _context.SaveChangesAsync();
         }
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var entity = await _context.Set<T>().FindAsync(id);
+            if (entity == null)
+                return false;
+
+            _context.Set<T>().Remove(entity);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {

@@ -20,6 +20,8 @@ namespace OrderShippingSystem.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateOrder(CreateOrderDto orderDto)
         {
+            
+
             var command = new CreateOrderCommand { Order = orderDto };
             var orderId = await _mediator.Send(command);
             return Ok(orderId);

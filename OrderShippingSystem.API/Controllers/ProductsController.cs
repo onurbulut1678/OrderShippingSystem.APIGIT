@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OrderShippingSystem.Application.Features.Products.Queries;
 using OrderShippingSystem.Application.Features.Products.DTOs;
-using OrderShippingSystem.Application.Features.Products.Commands; // EKLE
+using OrderShippingSystem.Application.Features.Products.Commands; 
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -36,6 +36,16 @@ namespace OrderShippingSystem.API.Controllers
             var productId = await _mediator.Send(command);
             return CreatedAtAction(nameof(Get), new { id = productId }, null);
         }
-    
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            var result = await _mediator.Send(new DeleteProductCommand(id));
+            if (!result)
+                return NotFound($"Product with ID {id} not found.");
+
+            return NoContent(); // 
+        }
+
     }
 }
