@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderShippingSystem.API", "OrderShippingSystem.API\OrderShippingSystem.API.csproj", "{18963E7A-B3C3-4CBC-B41B-D00111F52FB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderShippingSystem.API", "OrderShippingSystem.API\OrderShippingSystem.API.csproj", "{18963E7A-B3C3-4CBC-B41B-D00111F52FB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderShippingSystem.Domain", "OrderShippingSystem.Domain\OrderShippingSystem.Domain.csproj", "{9A5CE6A9-A9C5-4E0E-912F-7DC871D1D51A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderShippingSystem.Domain", "OrderShippingSystem.Domain\OrderShippingSystem.Domain.csproj", "{9A5CE6A9-A9C5-4E0E-912F-7DC871D1D51A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderShippingSystem.Application", "OrderShippingSystem.Application\OrderShippingSystem.Application.csproj", "{DF869CCB-B52D-431B-92A9-C967F836BCC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderShippingSystem.Application", "OrderShippingSystem.Application\OrderShippingSystem.Application.csproj", "{DF869CCB-B52D-431B-92A9-C967F836BCC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderShippingSystem.Infrastructure", "OrderShippingSystem.Infrastructure\OrderShippingSystem.Infrastructure.csproj", "{912BDEDD-F4EF-47AD-8F91-70D2C1C12B1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderShippingSystem.Infrastructure", "OrderShippingSystem.Infrastructure\OrderShippingSystem.Infrastructure.csproj", "{912BDEDD-F4EF-47AD-8F91-70D2C1C12B1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderShippingSystem.Tests", "OrderShippingSystem.Tests\OrderShippingSystem.Tests.csproj", "{6D07FE7F-0086-444E-92FD-02AB36D58D70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{912BDEDD-F4EF-47AD-8F91-70D2C1C12B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{912BDEDD-F4EF-47AD-8F91-70D2C1C12B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{912BDEDD-F4EF-47AD-8F91-70D2C1C12B1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D07FE7F-0086-444E-92FD-02AB36D58D70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D07FE7F-0086-444E-92FD-02AB36D58D70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D07FE7F-0086-444E-92FD-02AB36D58D70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D07FE7F-0086-444E-92FD-02AB36D58D70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
